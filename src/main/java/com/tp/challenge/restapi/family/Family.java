@@ -1,47 +1,51 @@
 package com.tp.challenge.restapi.family;
 
-//import java.lang.reflect.Field;
-//import java.time.LocalDate;
-
-//import javax.validation.constraints.NotNull;
-//import javax.validation.constraints.Past;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
+//import java.util.TreeMap;
+//import com.tp.challenge.restapi.familym.FamilyM;
+//import java.util.Iterator;
+//import java.util.Map;
+//import java.util.Set;
+//import java.lang.reflect.Field;
+//import javax.validation.constraints.NotNull;
+
+
+@Entity
 public class Family {
+	//private static long clsID;
+
+	@Id
 	private String id;
-	private static long clsID;
 	
-	//String s2 = Long.toString(big);    
-    //String s3 = String.valueOf(big);
+	@Column(name = "name")
+	private String name;	
 	
-	//@NotNull(message = "Name is a required field")
-	private String name;
-	@Size(min = 1, max = 2)
-	
+	@Column(name = "countrycode")
 	@Size(min = 1, max = 2, message = "Countrycode cannot be Empty and no longer than 2 characters (ISO 3166-1)")
 	private String countrycode;
 		
-	//@NotNull
-	//@Past
-	//private LocalDate dateOfBirth;
-	
 	
 	public Family() {
-		 this.id = Long.toString(clsID++);
+		 //this.id = Long.toString(clsID++);
 	}	
 	
-	public Family(String name, String countrycode) {		
+	public Family(String id,String name, String countrycode) {		
 		super();
-		this.id = Long.toString(clsID++);		
+		//this.id = Long.toString(clsID++);
+		this.id = id;
 		this.name = name;
 		this.countrycode = countrycode;
 	}	 	
     public String getId() {
 		return id;
 	}
-	/*public void setId(String id) {
+	public void setId(String id) {
 		 this.id = id;
-		}*/
+		}
 	public String getName() {
 		return name;
 	}
@@ -69,6 +73,6 @@ public class Family {
 	    return string == null || string.isEmpty();
 	}
 	
-	
+
 
 }

@@ -75,12 +75,16 @@ public class FamilyController {
 		return ResponseEntity.ok("Resource PUT");
 	}
 
+	/*@RequestMapping(method=RequestMethod.DELETE , value="/families/{id}")
+	public void deleteFamily(@PathVariable String id){
+		familyService.deleteFamily(id);		
+	}*/
+	
 	@RequestMapping(method=RequestMethod.DELETE , value="/families/{id}")
-	public ResponseEntity<?> deleteFamily(@PathVariable String id){		
+	public ResponseEntity<?> delFamily(@PathVariable String id){		
 		if (familyService.delFamily(id)) {
 			return ResponseEntity.ok("Resource DELETED");	
 		}		
 		return ResponseEntity.ok(HttpStatus.NOT_FOUND);
 	}
-	
 }
