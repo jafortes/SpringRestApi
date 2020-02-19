@@ -5,7 +5,9 @@ import java.time.LocalDate;
 import java.time.Period;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
@@ -15,14 +17,11 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tp.challenge.restapi.family.Family;
 
 @Entity
-public class FamilyM {
-	//private String FId; //family id
-	//private static int _ID;
-	
+public class FamilyM {	
+	//private static int _ID;	
 	@Id
-	private String id;
-	
-	
+	@GeneratedValue
+	private long id;
 		
 	@NotNull(message = "First Name is a required field")
 	@Size(min = 4, max = 50)
@@ -33,49 +32,58 @@ public class FamilyM {
 	private String lastname;
 	
 	private String fatherId;
-	private String motherId;
-	
+	private String motherId;	
 	//@Override
 	@JsonFormat(pattern="dd-MM-yyyy")
 	@NotNull
 	@Past
 	private LocalDate dateofbirth;
 	
-	@ManyToOne
-	private Family family;
 	
+	private String familyID;
+	/*@ManyToOne
+	@JoinColumn(name="family_id")
+	private Family family;	
 	public Family getFamily() {
 		return family;
 	}
-
 	public void setFamily(Family family) {
 		this.family = family;
-	}
+	}*/
 
-	public FamilyM(String id,String firstname, String lastname,String fatherId, String motherId ,LocalDate dateofbirth,String familyid)
+	public FamilyM(String firstname, String lastname,String fatherId, String motherId ,LocalDate dateofbirth,String familyID)
     {
-		//this.FId = fid;
 		//this.id = String.valueOf(_ID++);
-		this.id = id;
+		//this.id = id;
 		this.fatherId = fatherId;
         this.motherId = motherId;
         this.firstname = firstname;
         this.lastname = lastname;
         this.dateofbirth = dateofbirth;
-        this.family = new Family(familyid,lastname,"pt");
+        this.familyID = familyID;
+        //this.family = new Family(lastname,"pt");
     }
 	
 	public FamilyM() {
 		 //this.id = String.valueOf(_ID++);
 	}	
 	
-	public String getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(String Id) {
-		this.id = Id;
+	
+	public String getFamilyID() {
+		return familyID;
 	}
+	public void setFamilyID(String familyId) {
+		this.familyID = familyId;
+	}
+	
+	
+	/*public void setId(long Id) {
+		this.id = Id;
+	}*/
 	
 	/*public int get_ID() {
 		return _ID;
@@ -156,8 +164,8 @@ public class FamilyM {
 	
 	 public double getAge() { 
 		 LocalDate today = LocalDate.now();
-		 //LocalDate birthday = LocalDate.of(1960, Month.JANUARY, 1);//Birth date
-		 Period p = Period.between(dateofbirth, today);
+		 LocalDate birthday = LocalDate.of(dateofbirth.getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth());//Birth date
+		 Period p = Period.between(birthday, today);
 		 return p.getYears();
     }
 

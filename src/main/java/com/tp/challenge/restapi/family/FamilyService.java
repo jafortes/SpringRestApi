@@ -47,7 +47,7 @@ public class FamilyService {
 		//return families.stream().filter(f -> f.getName().equals(name)).findFirst().get();		
 	}
 	
-	public Family getFamily(String id){			
+	public Family getFamily(long id){			
 		//return families.stream().filter(f -> f.getId().equals(id)).findFirst().get();
 		//return familyRepository.findById(id)
 		//        .orElseThrow(() -> new EntityNotFoundException(id)); 		
@@ -68,7 +68,7 @@ public class FamilyService {
 
 
 	
-	public void updFamily(String id, Family family) {
+	public void updFamily(long id, Family family) {
 		familyRepository.save(family);
 		/*for(int i=0 ;  i<families.size() ;i++){
 			Family f = families.get(i);
@@ -79,7 +79,7 @@ public class FamilyService {
 		}*/
 	}
 
-	public void updparcialFamily(String id, Family family) {
+	public void updparcialFamily(long id, Family family) {
 		/*List<Family> families = new ArrayList<>();
 		familyRepository.findAll()
 		.forEach(families::add);
@@ -104,7 +104,7 @@ public class FamilyService {
 	}
 	
 
-	public boolean delFamily(String id) {				
+	public boolean delFamily(long id) {				
 		Optional<Family> familyOptional = familyRepository.findById(id);
 		if (familyOptional.isPresent()){
 			familyRepository.deleteById(id);
@@ -113,7 +113,7 @@ public class FamilyService {
 		return false;
 	}
 	
-	public void deleteFamily(String id) {
+	public void deleteFamily(long id) {
 		Optional<Family> familyOptional = familyRepository.findById(id);
 		if (familyOptional.isPresent()){
 			familyRepository.deleteById(id);			

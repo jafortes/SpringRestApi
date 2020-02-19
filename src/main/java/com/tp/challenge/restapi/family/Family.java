@@ -2,6 +2,7 @@ package com.tp.challenge.restapi.family;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.Size;
 
@@ -19,7 +20,8 @@ public class Family {
 	//private static long clsID;
 
 	@Id
-	private String id;
+	@GeneratedValue
+	private long familyid;
 	
 	@Column(name = "name")
 	private String name;	
@@ -33,19 +35,19 @@ public class Family {
 		 //this.id = Long.toString(clsID++);
 	}	
 	
-	public Family(String id,String name, String countrycode) {		
+	public Family(String name, String countrycode) {		
 		super();
 		//this.id = Long.toString(clsID++);
-		this.id = id;
+		//this.id = id;
 		this.name = name;
 		this.countrycode = countrycode;
 	}	 	
-    public String getId() {
-		return id;
+    public long getId() {
+		return familyid;
 	}
-	public void setId(String id) {
+	/*public void setId(String id) {
 		 this.id = id;
-		}
+		}*/
 	public String getName() {
 		return name;
 	}
