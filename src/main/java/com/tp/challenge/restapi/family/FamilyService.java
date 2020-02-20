@@ -1,7 +1,6 @@
 package com.tp.challenge.restapi.family;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 //import java.util.Arrays;
@@ -14,7 +13,6 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.util.ResourceUtils;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
 
@@ -29,19 +27,8 @@ public class FamilyService {
 	
 	@Autowired
 	ResourceLoader resourceLoader;
-	
-/*	public List<Family> families = new ArrayList<>(Arrays.asList(
-			new Family("Santos","pt"),				
-			new Family("Silva","pt"),
-			new Family("Pinto","pt"),
-			new Family("Sousa","es"),
-			new Family("Cook","uk")
-			));*/
 
-	
-	
-	
-	public List<CountryCode> getCodes(){
+	/*public List<CountryCode> getCodes(){
 		List<CountryCode> ccodes = new ArrayList<>();
 		try {					
 			Resource resource=resourceLoader.getResource("classpath:/json/ISO3166_1.json");
@@ -58,11 +45,10 @@ public class FamilyService {
 		}
 		
 		return ccodes;
-	}
+	}*/
 	
 	
 	public List<Family> getAllFamilies(){
-		//return families;
 		List<Family> families = new ArrayList<>();
 		familyRepository.findAll()
 		.forEach(families::add);
@@ -75,16 +61,9 @@ public class FamilyService {
 
 	public Family getFamilyName(String name){
 		return familyRepository.findByName(name);
-		//List<Family> families = new ArrayList<>();
-		//familyRepository.findAll()
-		//.forEach(families::add);		
-		//return families.stream().filter(f -> f.getName().equals(name)).findFirst().get();		
 	}
 	
-	public Family getFamily(long id){			
-		//return families.stream().filter(f -> f.getId().equals(id)).findFirst().get();
-		//return familyRepository.findById(id)
-		//        .orElseThrow(() -> new EntityNotFoundException(id)); 		
+	public Family getFamily(long id){					
 		Optional<Family> familyOptional = familyRepository.findById(id);
 		if (familyOptional.isPresent()){
 			Family f = familyOptional.get();
@@ -95,42 +74,23 @@ public class FamilyService {
 		}	
 	}
 	
-	public void addFamily(Family family){
-		//families.add(family);	
-		familyRepository.save(family);
+	public Family addFamily(Family family){
+		return familyRepository.save(family);
 	}
 
 
 	
 	public void updFamily(long id, Family family) {
 		familyRepository.save(family);
-		/*for(int i=0 ;  i<families.size() ;i++){
-			Family f = families.get(i);
-			if(f.getId().equals(id)) {					             			
-				families.set(i, family);
-				return;
-			}
-		}*/
 	}
 
-	public void updparcialFamily(long id, Family family) {
-		/*List<Family> families = new ArrayList<>();
-		familyRepository.findAll()
-		.forEach(families::add);
-		for(int i=0 ;  i<families.size() ;i++){
-			Family f = families.get(i);
-			if(f.getId().equals(id)) {				
-	            f.Merge(family); 				
-				families.set(i, f);
-				return;
-			}
-		}*/
-		
+	public Family updparcialFamily(long id, Family family) {
 		Optional<Family> familyOptional = familyRepository.findById(id);
 		if (familyOptional.isPresent()){
 			Family f = familyOptional.get();
 			 f.Merge(family); 	
 				familyRepository.save(f);
+				return f;
 		}
 		else{
 			throw new EntityNotFoundException(HttpStatus.NOT_FOUND +":"+ id);

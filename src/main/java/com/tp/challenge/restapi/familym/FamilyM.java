@@ -20,6 +20,8 @@ import com.tp.challenge.restapi.family.Family;
 @Entity
 public class FamilyM implements Serializable{	
 	
+	private static final long serialVersionUID = 1L;
+
 	@Id	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long fId;
@@ -34,7 +36,7 @@ public class FamilyM implements Serializable{
 	
 	private String fatherId;
 	private String motherId;	
-	//@Override
+	
 	@JsonFormat(pattern="dd-MM-yyyy")
 	@NotNull
 	@Past	
@@ -53,7 +55,6 @@ public class FamilyM implements Serializable{
 
 	public FamilyM(String firstname, String lastname,String fatherId, String motherId ,LocalDate dateofbirth,Family family)
     {
-		//this.id = id;
 		this.fatherId = fatherId;
         this.motherId = motherId;
         this.firstname = firstname;
@@ -117,8 +118,6 @@ public class FamilyM implements Serializable{
 		if(newObject == null || this.equals(newObject)){
 	        return;
 	    }		
-		//this.id = isEmptyString(newObject.id) ? this.id : newObject.id;
-		//this.FId = isEmptyString(newObject.FId) ? this.FId : newObject.FId;
 		this.dateofbirth = newObject.dateofbirth==null ? this.dateofbirth : newObject.dateofbirth;  
 		this.fatherId = isEmptyString(newObject.fatherId) ? this.fatherId : newObject.fatherId;		
 		this.motherId = isEmptyString(newObject.motherId) ? this.motherId : newObject.motherId;		
@@ -142,5 +141,11 @@ public class FamilyM implements Serializable{
          return dateofbirth.getYear();
      }
 
-
+     @Override
+ 	public String toString() {
+ 		return String.format(
+ 				"FamilyM [fId=%s, firstname=%s, lastname=%s, motherId=%s, fatherId=%s,, dateofbirth=%s, family=%s]", fId,
+ 				firstname, lastname,motherId,fatherId,dateofbirth, family);
+ 	}
+  
 }

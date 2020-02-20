@@ -1,14 +1,24 @@
-# SpringRestApi
-TP Families with Spring Boot
+# 
+# Coding Challenge Using SpringRestApi
+# Family&Families Members 
+#
 
-Use:Spring Tool Suit 3/Maven Build
+Tools that will need:
+-Maven
+-JDK1.8
+-IDE(STS,Eclipe..)
 
-On workspace tab on tree inside:
+How to Use:
+- Install Spring Tool Suit 3/Maven Build
+- GitHub:Download Sources 
+- Import Project to Spring Tool Suit
+ - On workspace tab on tree inside:
 restapi/src/main/java/com.tp.challenge.restapi
 RestapiApplication.java
-Run As..Spring Boot App.
+Run As..Spring Boot App 
+ - Run Unit Tests
+ - Import Postman collection json file on root to POSTMAN to Test RESP APIs and import all operations asked to function on this project
 
-See OpenAPI 3 specification docs:
+To see OpenAPI 3 specification docs:
 http://localhost:8080/swagger-ui-custom.html
 
-Import Postman collection json file to import all operations asked to function on this project

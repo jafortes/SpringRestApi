@@ -27,17 +27,17 @@ public class FamilyMService implements FamilyMCollectionRepository{
 
 	@Autowired	
 	private FamilyMRepository familyMRepository;
-	
-	// Creating an empty TreeMap more eficient to search    
+		   
 	private static  Map<String, TreeMap<FamilyM, Long>> dicFTree = new HashMap<String, TreeMap<FamilyM, Long>>();
     static {
-    	//For testing purposes only sync with CommandLineRunner.MyRun
-    	Family f = new Family(1,"Silva", "pt");
+    	//For testing purposes only sync with CommandLineRunner.MyRun    	
+    	Family f1 = new Family(1,"Silva", "pt");
         Family f2 = new Family(2,"Moreira", "pt");        
         Family f3 = new Family(3,"ElChapo", "es");
         
-    	FamilyM fm1 = new FamilyM("Rui", "Silva","1","2", LocalDate.of(1980, 11, 11),f);
-    	FamilyM fm2 = new FamilyM("Maria", "Silva","3","4", LocalDate.of(1990, 11, 11),f);
+        
+    	FamilyM fm1 = new FamilyM("Rui", "Silva","1","2", LocalDate.of(1980, 11, 11),f1);
+    	FamilyM fm2 = new FamilyM("Maria", "Silva","3","4", LocalDate.of(1990, 11, 11),f1);
     	FamilyM fm3 = new FamilyM("Pedro", "Moreira","5","6", LocalDate.of(1990, 11, 11),f2);
     	FamilyM fm4 = new FamilyM("Ana", "Moreira","7","8", LocalDate.of(2000, 11, 11),f2);
     	FamilyM fm5 = new FamilyM("Hernandez", "ElChapo","1","2", LocalDate.of(1980, 11, 11),f3);
@@ -57,8 +57,7 @@ public class FamilyMService implements FamilyMCollectionRepository{
 		FamilyTree3.put(fm5,fm5.getFamily().getid());
 		FamilyTree3.put(fm6,fm6.getFamily().getid());
 		dicFTree.put(String.valueOf(fm5.getFamily().getid()),FamilyTree3);
-		
-		
+				
     }
     
 
@@ -69,7 +68,6 @@ public class FamilyMService implements FamilyMCollectionRepository{
     
 
 	public List<FamilyM> getAllFamiliesM(){
-		//return families;
 		List<FamilyM> familiesm = new ArrayList<>();		
 		familyMRepository.findAll()
 		.forEach(familiesm::add);
@@ -77,19 +75,14 @@ public class FamilyMService implements FamilyMCollectionRepository{
 	}
 	
 	public List<FamilyM> getAllFamiliesmByFamilyId(String Id){	
-		List<FamilyM> familiesm = new ArrayList<>();
-		//familyMRepository.findAll()
+		List<FamilyM> familiesm = new ArrayList<>();		
 		familyMRepository.findByFamilyId(Long.valueOf(Id))
 		.forEach(familiesm::add);
-		//return familiesm.stream().filter(f -> f.getFamilyID().equals(familyId)).collect(Collectors.toList());
 		return familiesm;
 	}
 	
 	
-	public FamilyM getFamilyM(long id){			
-		//return families.stream().filter(f -> f.getId().equals(id)).findFirst().get();
-		//return familyRepository.findById(id)
-		//        .orElseThrow(() -> new EntityNotFoundException(id)); 		
+	public FamilyM getFamilyM(long id){			 		
 		Optional<FamilyM> familymOptional = familyMRepository.findById(id);
 		if (familymOptional.isPresent()){
 			FamilyM f = familymOptional.get();
@@ -105,7 +98,6 @@ public class FamilyMService implements FamilyMCollectionRepository{
 		familyMRepository.save(familym);
 		putMapTree(familym);
 	}
-
 
 	
 	public void updFamilyM(FamilyM familym) {
@@ -162,8 +154,8 @@ public class FamilyMService implements FamilyMCollectionRepository{
 	    public void removeMapTree(FamilyM fm)
 	    {   	    		    		    	
     		if (dicFTree.containsKey(String.valueOf(fm.getFamily().getid())))
-    		{
-    			Long resp = dicFTree.get(String.valueOf(fm.getFamily().getid())).remove(fm);    			
+    		{    			
+				Long resp = dicFTree.get(String.valueOf(fm.getFamily().getid())).remove(fm);				
     		}
 	    }
 
@@ -186,10 +178,7 @@ public class FamilyMService implements FamilyMCollectionRepository{
 	    	for (String fid : dicFTree.keySet()) {
 	    		res=0;
 	    		if (dicFTree.get(fid).size() > 0) {
-	    			
-	    			int lk = dicFTree.get(fid).lastKey().getBirthYear();
-	    			int fk = dicFTree.get(fid).firstKey().getBirthYear();
-	    			
+	    				    			
 	    			difNewOld = dicFTree.get(fid).lastKey().getBirthYear() - dicFTree.get(fid).firstKey().getBirthYear();
 	    			if (difNewOld > 0){
 	    				res= dicFTree.get(fid).size() / (double)difNewOld;	    			

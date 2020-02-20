@@ -54,20 +54,23 @@ public class FamilyController {
 	
 	@RequestMapping("/familiesByName/{name}")
 	@ResponseStatus(HttpStatus.OK)
-	public Family getFamilyName(@PathVariable String name){						 
-		return familyService.getFamilyName(name);			
+	public Family  getFamilyName(@PathVariable String name){						 
+		Family f =  familyService.getFamilyName(name);	
+		if (f != null) {
+			return f;			
+		}
+		return new Family();		
 	}
 		
 	@RequestMapping(method=RequestMethod.POST , value="/families")
-	public ResponseEntity<?> addFamily(@RequestBody @Valid Family family){
-		familyService.addFamily(family);
-		return ResponseEntity.ok("Resource POST");
+	public Family addFamily(@RequestBody @Valid Family family){
+		return familyService.addFamily(family);		
 	}
 	
 	@RequestMapping(method=RequestMethod.PATCH , value="/families/{id}")
 	public ResponseEntity<?> updateparcialFamily(@RequestBody @Valid Family family,@PathVariable long id){
 		familyService.updparcialFamily(id, family);
-		return ResponseEntity.ok("Resource PATCH");
+		return ResponseEntity.ok("Resource PATCHED");
 	}
 	
 	@RequestMapping(method=RequestMethod.PUT , value="/families/{id}")
@@ -75,11 +78,6 @@ public class FamilyController {
 		familyService.updFamily(id,family);
 		return ResponseEntity.ok("Resource PUT");
 	}
-
-	/*@RequestMapping(method=RequestMethod.DELETE , value="/families/{id}")
-	public void deleteFamily(@PathVariable String id){
-		familyService.deleteFamily(id);		
-	}*/
 	
 	@RequestMapping(method=RequestMethod.DELETE , value="/families/{id}")
 	public ResponseEntity<?> delFamily(@PathVariable long id){		
