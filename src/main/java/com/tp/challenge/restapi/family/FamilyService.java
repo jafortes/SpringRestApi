@@ -1,5 +1,8 @@
 package com.tp.challenge.restapi.family;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 //import java.util.Arrays;
 import java.util.List;
@@ -11,12 +14,21 @@ import javax.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ResourceUtils;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+
+
+
 
 @Service
 public class FamilyService {
 	
 	@Autowired
 	private FamilyRepository familyRepository;
+	
+	@Autowired
+	ResourceLoader resourceLoader;
 	
 /*	public List<Family> families = new ArrayList<>(Arrays.asList(
 			new Family("Santos","pt"),				
@@ -26,6 +38,28 @@ public class FamilyService {
 			new Family("Cook","uk")
 			));*/
 
+	
+	
+	
+	public List<CountryCode> getCodes(){
+		List<CountryCode> ccodes = new ArrayList<>();
+		try {					
+			Resource resource=resourceLoader.getResource("classpath:/json/ISO3166_1.json");
+			File file = resource.getFile();			
+			//TypeToken<List<CountryCode>> token = new TypeToken<List<CountryCode>>(){};
+			//List<CountryCode> CountryCodeList = gson.fromJson(response, token.getType());
+			
+			//resource.getFile();
+			//resource.getInputStream();
+			//ResourceUtils.getFile("classpath:/json/ISO3166_1.json");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ccodes;
+	}
+	
 	
 	public List<Family> getAllFamilies(){
 		//return families;

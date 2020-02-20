@@ -22,6 +22,7 @@ public class FamilyController {
 	private FamilyService familyService;
 	
 	
+	
 	@RequestMapping("/families")
 	public List<Family> getAllFamilies(){		
 		return familyService.getAllFamilies();

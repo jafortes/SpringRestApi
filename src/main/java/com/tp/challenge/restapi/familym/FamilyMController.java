@@ -26,7 +26,7 @@ public class FamilyMController {
 	
 	@RequestMapping("/families/{id}/familiesm")
 	public List<FamilyM> getAllFamiliesM(@PathVariable String id){		
-		return familyMService.getAllFamiliesM(id);
+		return familyMService.getAllFamiliesmByFamilyId(id);
 	}
 	
 	@RequestMapping("/familiesm/GRatio/{criteria}")

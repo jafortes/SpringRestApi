@@ -1,11 +1,12 @@
 package com.tp.challenge.restapi.familym;
 
+import java.io.Serializable;
 import java.time.LocalDate;
-//import java.time.LocalDateTime;
 import java.time.Period;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -17,18 +18,18 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.tp.challenge.restapi.family.Family;
 
 @Entity
-public class FamilyM {	
-	//private static int _ID;	
-	@Id
-	@GeneratedValue
-	private long id;
+public class FamilyM implements Serializable{	
+	
+	@Id	
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long fId;
 		
 	@NotNull(message = "First Name is a required field")
-	@Size(min = 4, max = 50)
+	@Size(min = 2, max = 50)
 	private String firstname;
 	
 	@NotNull(message = "Last Name is a required field")
-	@Size(min = 4, max = 50)
+	@Size(min = 2, max = 50)
 	private String lastname;
 	
 	private String fatherId;
@@ -36,70 +37,39 @@ public class FamilyM {
 	//@Override
 	@JsonFormat(pattern="dd-MM-yyyy")
 	@NotNull
-	@Past
+	@Past	
 	private LocalDate dateofbirth;
-	
-	
-	private String familyID;
-	/*@ManyToOne
-	@JoinColumn(name="family_id")
+			
+	//@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne()
+    @JoinColumn(name = "id", nullable = false)
 	private Family family;	
 	public Family getFamily() {
 		return family;
 	}
 	public void setFamily(Family family) {
 		this.family = family;
-	}*/
+	}
 
-	public FamilyM(String firstname, String lastname,String fatherId, String motherId ,LocalDate dateofbirth,String familyID)
+	public FamilyM(String firstname, String lastname,String fatherId, String motherId ,LocalDate dateofbirth,Family family)
     {
-		//this.id = String.valueOf(_ID++);
 		//this.id = id;
 		this.fatherId = fatherId;
         this.motherId = motherId;
         this.firstname = firstname;
         this.lastname = lastname;
-        this.dateofbirth = dateofbirth;
-        this.familyID = familyID;
-        //this.family = new Family(lastname,"pt");
+        this.dateofbirth = dateofbirth;        
+        this.family = family;
     }
 	
 	public FamilyM() {
-		 //this.id = String.valueOf(_ID++);
 	}	
 	
-	public long getId() {
-		return id;
+	public long getfId() {
+		return fId;
 	}
 
-	
-	public String getFamilyID() {
-		return familyID;
-	}
-	public void setFamilyID(String familyId) {
-		this.familyID = familyId;
-	}
-	
-	
-	/*public void setId(long Id) {
-		this.id = Id;
-	}*/
-	
-	/*public int get_ID() {
-		return _ID;
-	}
-	
-	public String getFId() {
-		return FId;
-	}
-
-	public void setFId(String FId) {
-		this.FId = FId;
-	}
-	
-	
-	*/
-	
+		
 	public String getFirstname() {
 		return firstname;
 	}
@@ -159,9 +129,7 @@ public class FamilyM {
 	private boolean isEmptyString(String string) {
 	    return string == null || string.isEmpty();
 	}
-	
-	
-	
+		
 	 public double getAge() { 
 		 LocalDate today = LocalDate.now();
 		 LocalDate birthday = LocalDate.of(dateofbirth.getYear(), LocalDate.now().getMonth(), LocalDate.now().getDayOfMonth());//Birth date

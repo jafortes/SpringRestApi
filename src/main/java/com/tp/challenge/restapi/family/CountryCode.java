@@ -13,38 +13,51 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 //import javax.validation.constraints.Size;
 
 
-public class CountryCode {
-    public String name;
+/*public class CountryCode {
+    public String desc;
+    public String code;
+    
     private Map<String, String> properties;
  
     @JsonAnySetter
     public void add(String key, String value) {
         properties.put(key, value);
     }
-}
+}*/
 
 
-/*public class CountryCode {
+public class CountryCode {
 
-	private String countrycode;	
-	private String description;
-		
-		
+	private String name;	
+	private String alpha2;
+	private String countrycode;
+	
+	
+	
+	
 	public CountryCode() {
 		
 	}		
-	public CountryCode(String countrycode, String description) {
+	public CountryCode(String name,String alpha2, String countrycode) {
 		super();
-		this.description = description;
+		this.name=name;
+		this.alpha2 = alpha2;
 		this.countrycode = countrycode;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getName() {
+		return name;
 	}
-	public void setSescription(String description) {
-		this.description = description;
+	public void setName(String name) {
+		this.name = name;
 	}
+	public String getAlpha2() {
+		return alpha2;
+	}
+	public void setAlpha2(String alpha2) {
+		this.alpha2 = alpha2;
+	}
+	
 	public String getCountrycode() {
 		return countrycode;
 	}
@@ -52,4 +65,13 @@ public class CountryCode {
 		this.countrycode = countrycode;
 	}
 
-}*/
+	@Override
+    public String toString() {
+        return "{" +
+                "name='" + name + '\'' +
+                ", alpha2='" + alpha2 + '\'' +                
+                ", countrycode='" + countrycode + '\'' +
+                '}';
+    }
+	
+}

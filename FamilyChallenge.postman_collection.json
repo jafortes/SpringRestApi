@@ -1,0 +1,415 @@
+{
+	"info": {
+		"_postman_id": "20b1edd7-7158-47f7-8d07-1d29d520e161",
+		"name": "FamilyChallenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "00Get Family by Name",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/familiesByName/Silva",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesByName",
+						"Silva"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "1 Add Family",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t \"id\": \"1\",\r\n     \"name\": \"Reis\",\r\n     \"countrycode\": \"pt\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/families/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"families",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2 Get Family by identifier",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/families/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"families",
+						"0"
+					]
+				},
+				"description": "GET by Name"
+			},
+			"response": []
+		},
+		{
+			"name": "3 List all Families",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/families",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"families"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3 List All Families Members",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/familiesm",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesm"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 Update Full Family",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": \"1\",\r\n        \"name\": \"Silva upd Total\",\r\n        \"countrycode\": \"it\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/families/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"families",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4 Update Parcial Family",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"id\": \"0\",\r\n        \"name\": \"Santos update parcial\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/families/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"families",
+						"0"
+					]
+				},
+				"description": "4 Update Parcial Family"
+			},
+			"response": []
+		},
+		{
+			"name": "5 Delete Family",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/families/0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"families",
+						"0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6 Search families by country code",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/familiesByCountryCode/pt",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesByCountryCode",
+						"pt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7 Add a family member",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstname\": \"Rui2\",\r\n        \"lastname\": \"Silva2\",\r\n        \"fatherId\": \"11\",\r\n        \"motherId\": \"22\",\r\n        \"dateofbirth\": \"11-11-1988\",\r\n        \"family\": {\r\n            \"id\": 1,\r\n            \"name\": \"Silva\",\r\n            \"countrycode\": \"pt\"\r\n        }\r\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/familiesm/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesm",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8 Get Family member by identifier",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/familiesm/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesm",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9 search family members by Family",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/families/2/familiesm/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"families",
+						"2",
+						"familiesm",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 Update Parcial Family Member",
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n     \"firstname\": \"firstname up\",\r\n     \"lastname\": \"lastname up\",\r\n     \"fatherId\": \"2\",\r\n     \"dateofbirth\": \"11-11-2019\"\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/familiesm/2",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesm",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10 Update Family member full",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n        \"firstname\": \"Pedro update\",\r\n        \"lastname\": \"Moreira update\",\r\n        \"fatherId\": \"2\",\r\n        \"motherId\": \"3\",\r\n        \"dateofbirth\": \"11-11-1999\",\r\n        \"family\": {\r\n            \"id\": 1,\r\n            \"name\": \"Moreira\",\r\n            \"countrycode\": \"pt\"\r\n        }\r\n    }"
+				},
+				"url": {
+					"raw": "http://localhost:8080/familiesm/3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesm",
+						"3"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11 Delete Family Member",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/familiesm/5",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesm",
+						"5"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12 Find family with highest accumulated age",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080//familiesm/GetFAAge/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"",
+						"familiesm",
+						"GetFAAge",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13 Find fastest growing family ",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/familiesm/GRatio/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"familiesm",
+						"GRatio",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -10,3 +10,5 @@ Run As..Spring Boot App.
 
 See OpenAPI 3 specification docs:
 http://localhost:8080/swagger-ui-custom.html
+
+Import Postman collection json file to import all operations asked to function on this project

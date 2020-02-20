@@ -1,6 +1,8 @@
 package com.tp.challenge.restapi.familym;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -17,43 +19,70 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-//import com.tp.challenge.restapi.family.Family;
-//import com.tp.challenge.restapi.family.FamilyRepository;
+import com.tp.challenge.restapi.family.Family;
+
 
 @Service
-public class FamilyMService {
+public class FamilyMService implements FamilyMCollectionRepository{
 
 	@Autowired	
 	private FamilyMRepository familyMRepository;
 	
 	// Creating an empty TreeMap more eficient to search    
-    Map<String, TreeMap<FamilyM, String>> dicFTree = new HashMap<String, TreeMap<FamilyM, String>>();
-
-    // Creating an empty TreeSet 
-    //TreeSet<Integer> tset = new TreeSet<Integer>(); 
+	private static  Map<String, TreeMap<FamilyM, Long>> dicFTree = new HashMap<String, TreeMap<FamilyM, Long>>();
+    static {
+    	//For testing purposes only sync with CommandLineRunner.MyRun
+    	Family f = new Family(1,"Silva", "pt");
+        Family f2 = new Family(2,"Moreira", "pt");        
+        Family f3 = new Family(3,"ElChapo", "es");
+        
+    	FamilyM fm1 = new FamilyM("Rui", "Silva","1","2", LocalDate.of(1980, 11, 11),f);
+    	FamilyM fm2 = new FamilyM("Maria", "Silva","3","4", LocalDate.of(1990, 11, 11),f);
+    	FamilyM fm3 = new FamilyM("Pedro", "Moreira","5","6", LocalDate.of(1990, 11, 11),f2);
+    	FamilyM fm4 = new FamilyM("Ana", "Moreira","7","8", LocalDate.of(2000, 11, 11),f2);
+    	FamilyM fm5 = new FamilyM("Hernandez", "ElChapo","1","2", LocalDate.of(1980, 11, 11),f3);
+        FamilyM fm6 = new FamilyM("Mariana", "ElChapo","3","4", LocalDate.of(1990, 11, 11),f3);
+        
+    	TreeMap<FamilyM, Long> FamilyTree1  = new TreeMap<FamilyM, Long>(new TreeMapComparator());
+		FamilyTree1.put(fm1,fm1.getFamily().getid());
+		FamilyTree1.put(fm2,fm2.getFamily().getid());
+		dicFTree.put(String.valueOf(fm1.getFamily().getid()),FamilyTree1);
+				
+		TreeMap<FamilyM, Long> FamilyTree2  = new TreeMap<FamilyM, Long>(new TreeMapComparator());
+		FamilyTree2.put(fm3,fm3.getFamily().getid());
+		FamilyTree2.put(fm4,fm4.getFamily().getid());
+		dicFTree.put(String.valueOf(fm3.getFamily().getid()),FamilyTree2);
+		
+		TreeMap<FamilyM, Long> FamilyTree3  = new TreeMap<FamilyM, Long>(new TreeMapComparator());
+		FamilyTree3.put(fm5,fm5.getFamily().getid());
+		FamilyTree3.put(fm6,fm6.getFamily().getid());
+		dicFTree.put(String.valueOf(fm5.getFamily().getid()),FamilyTree3);
+		
+		
+    }
     
-	/*private List<FamilyM> familiesM = new ArrayList<>(Arrays.asList(
-			new FamilyM("1","1","jose","fortes","","", LocalDate.of(1973,10,1)),
-			new FamilyM("2","1","joao","fortes","","", LocalDate.of(1976,12,7))
-			));*/
 
-	
-	//public List<FamilyM> getAllFamiliesM(String familyId){
+    @Override
+    public Collection<TreeMap<FamilyM, Long>> getMTreeFamiliesM() {
+       return dicFTree.values();
+    }
+    
+
 	public List<FamilyM> getAllFamiliesM(){
 		//return families;
-		List<FamilyM> familiesm = new ArrayList<>();
+		List<FamilyM> familiesm = new ArrayList<>();		
 		familyMRepository.findAll()
-		//familyMRepository.findByFamilyId(familyId)
 		.forEach(familiesm::add);
 		return familiesm;
 	}
 	
-	public List<FamilyM> getAllFamiliesM(String familyId){	
+	public List<FamilyM> getAllFamiliesmByFamilyId(String Id){	
 		List<FamilyM> familiesm = new ArrayList<>();
-		familyMRepository.findAll()
-		//familyMRepository.findByFamilyId(familyId)
+		//familyMRepository.findAll()
+		familyMRepository.findByFamilyId(Long.valueOf(Id))
 		.forEach(familiesm::add);
-		return familiesm.stream().filter(f -> f.getFamilyID().equals(familyId)).collect(Collectors.toList());				
+		//return familiesm.stream().filter(f -> f.getFamilyID().equals(familyId)).collect(Collectors.toList());
+		return familiesm;
 	}
 	
 	
@@ -102,9 +131,9 @@ public class FamilyMService {
 	public boolean deleteFamilyM(long id) {
 		Optional<FamilyM> familymOptional = familyMRepository.findById(id);
 		if (familymOptional.isPresent()){				
-			Optional<FamilyM> familymMother = familyMRepository.findByMotherId(familymOptional.get().getMotherId());
-			Optional<FamilyM> familymfather = familyMRepository.findByFatherId(familymOptional.get().getFatherId());
-			if (!familymMother.isPresent() && !familymfather.isPresent()){						
+			FamilyM familymMother = familyMRepository.findByMotherId(familymOptional.get().getMotherId());
+			FamilyM familymfather = familyMRepository.findByFatherId(familymOptional.get().getFatherId());
+			if (familymMother != null && familymfather  != null ){						
 				familyMRepository.deleteById(id);
 				removeMapTree(familymOptional.get());
 				return true;
@@ -112,38 +141,29 @@ public class FamilyMService {
 		}
 		return false;		
 	}
-	
-	/*public boolean deleteFamilyM(long id) {
-		Optional<FamilyM> familymOptional = familyMRepository.findById(id);
-		if (familymOptional.isPresent()){			
-			familyMRepository.deleteById(id);
-			removeMapTree(familymOptional.get());
-			return true;
-		}
-		return false;		
-	}*/
+
 	
 
 	    public void putMapTree(FamilyM fm)
 	    {	    	
-	    	if (dicFTree.containsKey(fm.getFamilyID())) 
+	    	if (dicFTree.containsKey(String.valueOf(fm.getFamily().getid()))) 
 	    	{
-	    		dicFTree.get(fm.getFamilyID()).put(fm, fm.getFamilyID());	    		
+	    		dicFTree.get(String.valueOf(fm.getFamily().getid())).put(fm, fm.getFamily().getid());	    		
 	    	}
 	    	else 
 	    	{
-	    		TreeMap<FamilyM, String> FamilyTree  = new TreeMap<FamilyM, String>(new TreeMapComparator());
-	    		FamilyTree.put(fm,fm.getFamilyID());
-	    		dicFTree.put(fm.getFamilyID(),FamilyTree);
+	    		TreeMap<FamilyM, Long> FamilyTree  = new TreeMap<FamilyM, Long>(new TreeMapComparator());
+	    		FamilyTree.put(fm,fm.getFamily().getid());
+	    		dicFTree.put(String.valueOf(fm.getFamily().getid()),FamilyTree);
 	    	}	    	
 	    }
 
 
 	    public void removeMapTree(FamilyM fm)
 	    {   	    		    		    	
-    		if (dicFTree.containsKey(fm.getFamilyID()))
+    		if (dicFTree.containsKey(String.valueOf(fm.getFamily().getid())))
     		{
-    			String resp = dicFTree.get(fm.getFamilyID()).remove(fm);    			
+    			Long resp = dicFTree.get(String.valueOf(fm.getFamily().getid())).remove(fm);    			
     		}
 	    }
 
@@ -166,6 +186,10 @@ public class FamilyMService {
 	    	for (String fid : dicFTree.keySet()) {
 	    		res=0;
 	    		if (dicFTree.get(fid).size() > 0) {
+	    			
+	    			int lk = dicFTree.get(fid).lastKey().getBirthYear();
+	    			int fk = dicFTree.get(fid).firstKey().getBirthYear();
+	    			
 	    			difNewOld = dicFTree.get(fid).lastKey().getBirthYear() - dicFTree.get(fid).firstKey().getBirthYear();
 	    			if (difNewOld > 0){
 	    				res= dicFTree.get(fid).size() / (double)difNewOld;	    			
