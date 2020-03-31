@@ -22,3 +22,5 @@ Run As..Spring Boot App
 To see OpenAPI 3 specification docs:
 http://localhost:8080/swagger-ui-custom.html
 
+Put GitHub on STS
+ 
