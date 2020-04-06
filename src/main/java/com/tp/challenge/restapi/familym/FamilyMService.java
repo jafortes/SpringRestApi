@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
 import java.util.TreeMap;
@@ -155,7 +156,8 @@ public class FamilyMService implements FamilyMCollectionRepository{
 	    {   	    		    		    	
     		if (dicFTree.containsKey(String.valueOf(fm.getFamily().getid())))
     		{    			
-				Long resp = dicFTree.get(String.valueOf(fm.getFamily().getid())).remove(fm);				
+				//Long resp = dicFTree.get(String.valueOf(fm.getFamily().getid())).remove(fm);				
+    			dicFTree.get(String.valueOf(fm.getFamily().getid())).remove(fm);
     		}
 	    }
 
@@ -201,10 +203,10 @@ public class FamilyMService implements FamilyMCollectionRepository{
 	    	List<FindFamily> lsttmp = new ArrayList<>();
 	    	List<FindFamily> lst = new ArrayList<>(); 	              
 	        for (String fid : dicFTree.keySet()) {	        	
-	        	Set set = dicFTree.get(fid).entrySet();
-	  	        Iterator iterator = set.iterator();
+	        	Set<Entry<FamilyM, Long>> set = dicFTree.get(fid).entrySet();
+	  	        Iterator<Entry<FamilyM, Long>> iterator = set.iterator();
 	  	        while(iterator.hasNext()) {
-	  	           Map.Entry mentry = (Map.Entry)iterator.next();
+	  	           Map.Entry<FamilyM,Long> mentry = (Map.Entry<FamilyM,Long>)iterator.next();
 	  	           FamilyM f = (FamilyM)(mentry.getKey());
 	  	           acumAge += f.getAge();
 	  	        }
